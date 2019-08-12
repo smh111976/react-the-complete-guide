@@ -5,25 +5,32 @@ import Person from './Person/Person';
 class App extends Component {
   state = {
     persons: [
-      { name: 'Max', age: 28 },
-      { name: 'Manu', age: 29 },
-      { name: 'Stephanie', age: 26 }
+      { id: 'asf1c', name: 'Max', age: 28 },
+      { id: 'fod5l', name: 'Manu', age: 29 },
+      { id: 'z9kso', name: 'Stephanie', age: 26 }
     ],
     otherState: 'some other value',
     showPersons: false
   };
   deletePersonHandler = personIndex => {
-    const persons = this.state.persons;
+    // const persons = this.state.persons.slice();
+    const persons = [...this.state.persons];
     persons.splice(personIndex, 1);
     this.setState({ persons: persons });
   };
-  nameChangedHandler = event => {
+  nameChangedHandler = (event, id) => {
+    const personIndex = this.state.persons.findIndex(person => {
+      return person.id === id;
+    });
+    const person = {
+      ...this.state.persons[personIndex]
+    };
+    person.name = event.target.value;
+    const persons = [...this.state.persons];
+    persons[personIndex] = person;
+
     this.setState({
-      persons: [
-        { name: 'Max', age: 28 },
-        { name: event.target.value, age: 29 },
-        { name: 'Stephanie', age: 27 }
-      ]
+      persons: persons
     });
   };
 
@@ -52,6 +59,10 @@ class App extends Component {
                 name={person.name}
                 age={person.age}
                 click={() => this.deletePersonHandler(index)}
+                key={person.id}
+                changed={event => {
+                  this.nameChangedHandler(event, person.id);
+                }}
               />
             );
           })}

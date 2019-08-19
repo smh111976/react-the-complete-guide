@@ -1,10 +1,14 @@
 import React from 'react';
-import './Person.css';
+import classes from './Person.css';
 const person = props => {
-  
-  };
+  // const rnd = Math.random();
+  // console.log(rnd);
+  // if (rnd > 0.7) {
+  //   throw new Error('Something went wrong');
+  // }
+
   return (
-    <div className='Person'>
+    <div className={classes.Person}>
       <p onClick={props.click}>
         I'm {props.name} and I am {props.age} years old.
       </p>
